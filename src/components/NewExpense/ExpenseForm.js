@@ -1,43 +1,56 @@
 import React, { useState } from "react";
 import "./ExpenseForm.css";
 
-const ExpenseForm = () => {
+const ExpenseForm = (props) => {
   const [enteredTitle, setEnteredTitle] = useState("");
-  const [enteredAmount, setEnteredAmount]=useState("");
-  const [enteredDate, setEnteredDate]=useState("");
+  const [enteredAmount, setEnteredAmount] = useState("");
+  const [enteredDate, setEnteredDate] = useState("");
 
   const titleChangeHandler = (event) => {
     setEnteredTitle(event.target.value);
   };
-  const amountChangeHandler=(event)=>{
+
+  const amountChangeHandler = (event) => {
     setEnteredAmount(event.target.value);
   };
-  const dateChangeHandler=(event)=>{
+
+  const dateChangeHandler = (event) => {
     setEnteredDate(event.target.value);
   };
-  function formhandle(event){
+
+  const formSubmitHandler = (event) => {
     event.preventDefault();
-    const expenses={
-      title: enteredTitle,
+    const expenseData = {     
       amount: enteredAmount,
-      date: enteredDate
-    }
-    console.log(expenses);
+      date: new Date(enteredDate),
+      title: enteredTitle
+    };
+    props.onSaveExpenseDataMock(expenseData);
     setEnteredTitle("");
     setEnteredAmount("");
     setEnteredDate("");
-  }
+  };
 
   return (
-    <form onSubmit={formhandle}>
+    <form onSubmit={formSubmitHandler}>
       <div className="new-expense__controls">
         <div className="new-expense__control">
           <label htmlFor="title">Title</label>
-          <input type="text" value={enteredTitle} id="title" onChange={titleChangeHandler} />
+          <input
+            type="text"
+            value={enteredTitle}
+            id="title"
+            onChange={titleChangeHandler}
+          />
         </div>
         <div className="new-expense__control">
           <label htmlFor="amount">Amount</label>
-          <input type="number" value={enteredAmount} id="amount" onChange={amountChangeHandler} />
+          <input
+            type="number"
+            value={enteredAmount}
+            id="amount"
+            onChange={amountChangeHandler}
+          />
         </div>
         <div className="new-expense__control">
           <label htmlFor="date">Date</label>
